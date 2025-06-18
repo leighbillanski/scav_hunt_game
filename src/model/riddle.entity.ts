@@ -23,4 +23,7 @@ export class Riddle {
   @ManyToOne(() => Hunt, (hunt) => hunt.id)
   @JoinColumn({ name: 'FK_HUNT_ID', referencedColumnName: 'id' })
   hunt: Hunt;
+
+  @Column({ name: 'SEQUENCE', type: 'int' })
+  sequence: number;
 }

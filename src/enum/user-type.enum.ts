@@ -1,4 +1,4 @@
 export enum UserType {
-  HUNTER = 'HUNTER',
+  HOST = 'HOST',
   HUNT_MASTER = 'HUNT_MASTER',
 }

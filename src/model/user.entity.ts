@@ -18,11 +18,9 @@ export class User {
 
   @Column({
     name: 'ROLE',
-    type: 'enum',
-    enum: UserType,
-    default: UserType.HUNTER,
+    type: 'text',
   })
-  role: string;
+  role: UserType;
 
   @OneToMany(() => Hunt, (hunt) => hunt.user)
   hunts: Hunt[];
