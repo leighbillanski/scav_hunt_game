@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QrCodeController } from './qr-code.controller';
 import { QrCodeService } from './qr-code.service';
-import { Riddle } from '../../model/riddle.entity';
+import { QrCode } from '../../model/qr-code.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Riddle])],
+  imports: [TypeOrmModule.forFeature([QrCode])],
   controllers: [QrCodeController],
   providers: [QrCodeService],
   exports: [QrCodeService],
