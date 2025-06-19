@@ -31,7 +31,7 @@ export class UserController {
     return this.userService.login(loginDto);
   }
 
-  @Post('/signup')
+  @Post('/register')
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
