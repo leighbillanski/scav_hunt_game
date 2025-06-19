@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsOptional } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 
 export class UpdateHuntDto {
   @IsOptional()
@@ -6,6 +6,6 @@ export class UpdateHuntDto {
   name?: string;
 
   @IsOptional()
-  @IsEmail()
+  @IsString()
   description?: string;
 }

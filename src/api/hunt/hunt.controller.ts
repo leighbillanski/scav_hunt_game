@@ -8,15 +8,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { HuntService } from './hunt.service';
-import { Hunt } from '../../model/hunt.entity';
 import { CreateHuntDto } from './dto/create-hunt.dto';
 import { UpdateHuntDto } from './dto/update-hunt.dto';
 
-@Controller('users')
+@Controller('hunt')
 export class HuntController {
   constructor(private userService: HuntService) {}
   @Get(':user')
-  getAllHunts(@Param('user') user: string): Promise<Hunt[]> {
+  getAllHunts(@Param('user') user: string) {
     return this.userService.getAllHuntsPerUser(user);
   }
 
