@@ -15,7 +15,7 @@ import { QrCodeModule } from './api/qr-code/qr-code.module';
       type: 'sqlite',
       database: 'hunt.db',
       entities: [User, Hunt, Riddle, QrCode],
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
     HuntModule,
