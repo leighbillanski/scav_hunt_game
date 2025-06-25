@@ -14,7 +14,7 @@ import { QrCodeModule } from './api/qr-code/qr-code.module';
       username: 'scav_hunt_game_user',
       password: 'jCSrvjGV5NIiVZpQX5RyhhRQPFJFmuWa',
       database: 'scav_hunt_game',
-      synchronize: true,
+      synchronize: false,
       extra: {
         ssl: {
           rejectUnauthorized: false,
