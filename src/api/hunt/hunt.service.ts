@@ -12,11 +12,10 @@ export class HuntService {
     private readonly huntRepository: Repository<Hunt>,
   ) {}
 
-  getAllHuntsPerUser(username: string): Promise<Hunt[]> {
-    return this.huntRepository.find({
-      where: { user: { userName: username } },
-    });
+  async getAllHuntsPerUser(): Promise<any[]> {
+    return await this.huntRepository.find({ relations: ['user'] });
   }
+
   async getHuntById(id: number): Promise<Hunt> {
     const hunt = await this.huntRepository.findOne({ where: { id } });
     if (!hunt) {

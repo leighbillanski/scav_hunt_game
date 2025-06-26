@@ -14,7 +14,7 @@ import { UpdateRiddleDto } from './dto/update-riddle.dto';
 @Controller('riddle')
 export class RiddleController {
   constructor(private userService: RiddleService) {}
-  @Get(':hunt')
+  @Get('/hunt/:hunt')
   getAllHunts(@Param('hunt') huntId: number) {
     return this.userService.getAllRiddlesPerHunt(huntId);
   }

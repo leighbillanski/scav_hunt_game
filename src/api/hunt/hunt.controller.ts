@@ -14,9 +14,9 @@ import { UpdateHuntDto } from './dto/update-hunt.dto';
 @Controller('hunt')
 export class HuntController {
   constructor(private userService: HuntService) {}
-  @Get(':user')
-  getAllHunts(@Param('user') user: string) {
-    return this.userService.getAllHuntsPerUser(user);
+  @Get()
+  getAllHunts() {
+    return this.userService.getAllHuntsPerUser();
   }
 
   @Get(':id')

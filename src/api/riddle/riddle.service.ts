@@ -1,24 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { CreateRiddleDto } from './dto/create-riddle.dto';
 import { UpdateRiddleDto } from './dto/update-riddle.dto';
 import { Riddle } from '../../model/riddle.entity';
+import { QrCode } from '../../model/qr-code.entity';
 
 @Injectable()
 export class RiddleService {
   constructor(
     @InjectRepository(Riddle)
     private readonly huntRepository: Repository<Riddle>,
+    @InjectRepository(QrCode)
+    private readonly qrCodeRepository: Repository<QrCode>,
+    private readonly dataSource: DataSource,
   ) {}
 
-  getAllRiddlesPerHunt(hunt: number): Promise<Riddle[]> {
+  getAllRiddlesPerHunt(huntId: number): Promise<Riddle[]> {
     return this.huntRepository.find({
-      where: { hunt: { id: hunt } },
+      where: { hunt: { id: huntId } },
+      relations: ['hunt'],
     });
   }
+
   async getRiddleById(id: number): Promise<Riddle> {
-    const riddle = await this.huntRepository.findOne({ where: { id } });
+    const riddle = await this.huntRepository.findOne({
+      where: { id },
+      relations: ['qrCode'],
+    });
     if (!riddle) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
@@ -26,8 +35,18 @@ export class RiddleService {
   }
 
   async createRiddle(createRiddleDto: CreateRiddleDto): Promise<Riddle> {
-    const newRiddle = this.huntRepository.create(createRiddleDto);
-    return this.huntRepository.save(newRiddle);
+    return await this.dataSource.transaction(async (manager) => {
+      // Save qrCode first
+      const qrCode = await manager
+        .getRepository(QrCode)
+        .save(createRiddleDto.qrCode);
+      // Create riddle with saved qrCode
+      const newRiddle = manager.getRepository(Riddle).create({
+        ...createRiddleDto,
+        qrCode,
+      });
+      return manager.getRepository(Riddle).save(newRiddle);
+    });
   }
 
   async updateRiddle(

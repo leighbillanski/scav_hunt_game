@@ -8,6 +8,5 @@ export class CreateHuntDto {
   @IsString()
   description: string;
 
-  @IsString()
   user: User;
 }
